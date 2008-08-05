@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           j test
+// @name           chain_sample
 // @namespace      gomaxfire.dnsdojo.com
 // @require       http://jqueryjs.googlecode.com/files/jquery-1.2.6.js
 // @require       http://github.com/gotin/chain/tree/master%2Fchain.js?raw=true
