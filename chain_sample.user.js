@@ -74,8 +74,8 @@ if(window.parent==window){
   // loop test without wait time
   //
 
-//  $C.loop(3, test)  // 3times loop with 0ms wait
-//  (function(){log("finish.");})();
+  $C.loop(3, test)  // 3times loop with 0ms wait
+  (function(){log("finish.");})();
 
 
   //jQuery test
@@ -87,18 +87,16 @@ if(window.parent==window){
 
   //event test
   var $C2 = $C.create();
-
   $C2.loop(10,
            function(){
-             console.log("hoge");
-             $C2.event(document.body, "click")
+             $C2.event(document.body, "click")        // event driven chain
              (
                function(e){
                  log("[click!!]");
                  $C2(new Date().getTime())
                  (
-                   $C2.cond(function(n){console.log(n);return n%2==0;},
-                            function(){console.log("[even]");})
+                   $C2.cond(function(n){return n%2==0;},             // condition
+                            function(){console.log("[even]");})      // action when condtion becomes true
                  )();
                }
              )();
