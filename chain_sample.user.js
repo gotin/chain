@@ -91,18 +91,18 @@ if(window.parent==window){
            function(){
              $C2.event(document.body, "click")        // event driven chain
              (
-               function(e){
+               function (e){ // event call back
                  log("[click!!]");
                  $C2(new Date().getTime())
                  (
                    $C2.cond(function(n){return n%2==0;},             // condition
                             function(){console.log("[even]");})      // action when condtion becomes true
                  )();
-               }
+               } // event call back
              )();
            }
           )(
-            function(){
+            function(){  // function after finishing loop
               log("10 times click");
             }
           )();
