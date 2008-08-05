@@ -149,7 +149,7 @@ var $C=
        };
        $$C.cond = function(cond, func){
          return function(ret){
-           if(condition(cond, ret){
+           if(condition(cond, ret)){
              return func(ret);
            } else {
              return ret;
