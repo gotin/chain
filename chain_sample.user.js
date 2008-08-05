@@ -2,7 +2,7 @@
 // @name           j test
 // @namespace      gomaxfire.dnsdojo.com
 // @require       http://jqueryjs.googlecode.com/files/jquery-1.2.6.js
-// @require       http://gomaxfire.dnsdojo.com/jsrails/chain.js
+// @require       http://github.com/gotin/chain/tree/master%2Fchain.js?raw=true
 // @include        *
 // ==/UserScript==
 if(window.parent==window){
@@ -73,8 +73,9 @@ if(window.parent==window){
 
   // loop test without wait time
   //
-  $C.loop(3, test)  // 3times loop with 0ms wait
-  (function(){log("finish.");})();
+
+//  $C.loop(3, test)  // 3times loop with 0ms wait
+//  (function(){log("finish.");})();
 
 
   //jQuery test
@@ -91,10 +92,16 @@ if(window.parent==window){
            function(){
              console.log("hoge");
              $C2.event(document.body, "click")
-             (function(e){
-                log("[click!!]");
-              })
-             ();
+             (
+               function(e){
+                 log("[click!!]");
+                 $C2(new Date().getTime())
+                 (
+                   $C2.cond(function(n){console.log(n);return n%2==0;},
+                            function(){console.log("[even]");})
+                 )();
+               }
+             )();
            }
           )(
             function(){
