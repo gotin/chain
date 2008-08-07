@@ -73,6 +73,7 @@
  * 6
  */
 
+
 var $C=
   window.$C=
   (function(){
@@ -180,7 +181,6 @@ var $C=
        $$C.para = parallel;
        $$C.loop = loop;
        $$C.for_loop = for_loop;
-
        $$C.event = event;
        return $$C;
 
@@ -233,7 +233,12 @@ var $C=
                done = true;
                var data = xhr.responseText;
                if(String(options.dataType).match(/^json$/i)){
-                 data = eval(data);
+                 try{
+                   data = eval("("+data+")");
+                 }catch(e){
+                   done = false;
+                   options.onerror(xhr);
+                 }
                }
                $$C.push(data);
                $$C.resume();
@@ -397,9 +402,13 @@ var $C=
          return chain_apply_function;
        }
 
+
        // utility
        function array(a){
          return Array.prototype.slice.apply(a);
        }
      }
+
+
+
    })();
