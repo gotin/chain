@@ -1,6 +1,5 @@
 /*
- *
- * chain.js
+ * $C: chain.js
  *  js function chain library
  *  require "jQuery" (for xhr method)
  * Copyright(c) 2008, 2009 Go Kojima gou.kojima@gmail.com
@@ -24,6 +23,8 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
+ *
+ * History::
  *
  * ver 1.1(2009-03-11)
  * modify $C.para.
@@ -123,6 +124,7 @@
             caller = c;
           };
 
+          $$C.xhr_jsonp = make_xhr_function("jsonp");
           $$C.xhr_json = make_xhr_function("json");
           $$C.xhr = make_xhr_function();
           $$C.ajax = ajax;
