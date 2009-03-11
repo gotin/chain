@@ -187,8 +187,7 @@
             return current_value;
           };
 
-          //$$C.para = parallel;
-          $$C.para = parallel2;
+          $$C.para = parallel;
           $$C.loop = loop;
           $$C.for_loop = for_loop;
 
@@ -352,21 +351,6 @@
           }
 
           function parallel(todo){
-            var result = {};
-            var c = null;
-            for(var a in todo){
-              c = (c ? c(todo[a]):$$C(todo[a]))(mk_set_func(a));
-            }
-            return c(function(){return result;});
-
-            function mk_set_func(work_id){
-              return  function(ret){
-                result[work_id] = ret;
-              };
-            }
-          }
-
-          function parallel2(todo){
             $$C.pause();
             var result = {};
             var c = null;
