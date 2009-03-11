@@ -1,18 +1,18 @@
 // ==UserScript==
 // @name           chain_sample
 // @namespace      gomaxfire.dnsdojo.com
-// @require       http://jqueryjs.googlecode.com/files/jquery-1.2.6.js
-// @require       http://github.com/gotin/chain/tree/master%2Fchain.js?raw=true
+// @require       http://jqueryjs.googlecode.com/files/jquery-1.3.2.js
+// @require       http://github.com/gotin/chain/tree/master/chain.js?raw=true
 // @include        *
 // ==/UserScript==
 if(window.parent==window){
-
   function log(s){console.log(s);};
+
 
   var test = function(){
     $C(function main(){
          log("start request to get existing file");
-         $C.xhr("http://gomaxfire.dnsdojo.com/jsrails/data.txt")
+         $C.xhr("http://github.com/gotin/chain/raw/65864d6430feab097fe7753248998f23f5fdefe5/README")
          (
            $C.ok(
              function(html){
@@ -31,7 +31,7 @@ if(window.parent==window){
          )(
            function sub(){
              log("start request to get unexisting file");
-             $C.xhr("http://ggomaxfire.dnsdojo.com/not_found_text.txt")
+             $C.xhr("http://gomaxfire.dnsdojo.com/jsrails/data.txt_not_found")
              (
                $C.ok(function(txt){
                        log("(ok!)");
@@ -78,32 +78,75 @@ if(window.parent==window){
   (function(){log("finish.");})();
 
 
-  //jQuery test
-  //
-  //console.log($("a").attr("href"));
-  //$("a").attr("href","http://www.google.com");
-  //console.log($("a").attr("href"));
-  //$.get("http://d.hatena.ne.jp/gotin/",function(html){console.log(html);});
-
   //event test
-  var $C2 = $C.create();
-  $C2.loop(10,
-           function(){
-             $C2.event(document.body, "click")        // event driven chain
-             (
-               function (e){ // event call back
-                 log("[click!!]");
-                 $C2(new Date().getTime())
-                 (
-                   $C2.cond(function(n){return n%2==0;},             // condition
-                            function(){console.log("[even]");})      // action when condtion becomes true
-                 )();
-               } // event call back
+  (function(){
+     var count = 0;
+     var $C2 = $C.create();
+     $C2.loop(10,
+              function(){
+                log(++count);
+                $C2.event(document.body, "click")  // event driven chain
+                (function (e){ // event call back
+                   log("[click!!]"+count);
+                   $C2(new Date().getTime())
+                   (
+                     $C2.cond(function(n){return n%2==0;},  // condition
+                              function(){log("[even]");})   // action when condtion becomes true
+                   )();
+                 }); // event call back
+              }
+             )(
+               function(){  // function after finishing loop
+                 log("10 times click");
+               }
              )();
-           }
+   })();
+
+
+
+  // pararell test
+  var $C3 = $C.create();
+  $C3.para([
+             function(){
+               log("para1:");
+               $C.xhr("http://github.com/gotin/chain/raw/65864d6430feab097fe7753248998f23f5fdefe5/README")
+               (
+                 $C.ok(
+                   function(html){
+                     log("(ok!)");
+                     return html;
+                   }
+                 )
+               )(
+                 $C.error(function(e){
+                            log("(error)");
+                            log(e.options.url);
+                            return "error";
+                          })
+               )();
+             },
+             function(){
+               log("para2:");
+               $C.xhr("http://labs.mozilla.com/2009/02/introducing-bespin/")
+               (
+                 $C.ok(
+                   function(html){
+                     log("(ok!)");
+                     return html;
+                   }
+                 )
+               )(
+                 $C.error(function(e){
+                            log("(error)");
+                            log(e.options.url);
+                            return "error";
+                          })
+               )();
+             }]
           )(
-            function(){  // function after finishing loop
-              log("10 times click");
+            function(result){
+              log("para result:");
+              log(result); // {0:(chain readme), 1:(bespin html)}
             }
           )();
 
