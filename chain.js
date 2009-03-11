@@ -3,7 +3,7 @@
  * chain.js
  *  js function chain library
  *  require "jQuery" (for xhr method)
- * Copyright(c) 2008 Go Kojima gou.kojima@gmail.com
+ * Copyright(c) 2008, 2009 Go Kojima gou.kojima@gmail.com
  *
  * License:: MIT
  *
