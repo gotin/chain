@@ -2,7 +2,7 @@
  * $C: chain.js
  *  js function chain library
  *  require "jQuery" (for xhr method)
- * Copyright(c) 2008, 2009 Go Kojima gou.kojima@gmail.com
+ * Copyright(c) 2008, 2009 gotin gordon.timothy.nathanson@gmail.com
  *
  * License:: MIT
  *
@@ -320,7 +320,6 @@
                 var prop = stack.pop();
                 if(!prop) return; // stack is empty
                 q = prop.q;
-                // current_value = ....
                 execute();
                 arguments.callee();
               }
@@ -355,7 +354,6 @@
           function parallel(todo){
             $$C.pause();
             var result = {};
-            var c = null;
             var count = 0;
             for(var a in todo) ++count;
             for(a in todo){
@@ -387,7 +385,6 @@
               func = t;
               t = 0;
             }
-
             return for_loop(init, cond, incr, t)(func);
           }
 
