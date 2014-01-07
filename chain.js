@@ -239,7 +239,7 @@
             if(options.url){
               $$C.pause();
               $$C();
-              if("GM_xmlhttpRequest" in this){
+              if("GM_xmlhttpRequest" in top_this){
                 var done = false;
                 var timeout = options.timeout || (options.timeout = 3 * 1000);
                 options.method = options.type||"GET";
@@ -357,7 +357,8 @@
             var count = 0;
             for(var a in todo) ++count;
             for(a in todo){
-              $$C.create()(todo[a])(mk_set_func(a))();
+              var chain = $$C.create();
+              todo[a](chain)(mk_set_func(a))();
             }
             return chain_apply_function;
 
@@ -411,11 +412,12 @@
             };
           }
 
-          function event(target, type){
+          function event(exp, type){
+            var $target = $(exp);
             $$C.pause();
-            $(target).bind(type,
+            $target.bind(type,
                            function(e){
-                             $(target).unbind(type, arguments.callee);
+                             $target.unbind(type, arguments.callee);
                              $$C.push(e);
                              $$C.resume();
                            });
